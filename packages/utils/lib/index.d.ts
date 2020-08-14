@@ -13,4 +13,3 @@ export { mkdirp };
 export { yargs };
 export { glob };
 export { Mustache };
-//# sourceMappingURL=index.js.map
