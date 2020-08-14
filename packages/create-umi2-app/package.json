@@ -1,0 +1,31 @@
+{
+  "name": "@lzdata/create-umi2-app",
+  "version": "1.0.0",
+  "description": "@lzdata/create-umi2-app",
+  "main": "src/index.js",
+  "files": [
+    "src"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/paradox010/lz"
+  },
+  "keywords": [
+    "lz"
+  ],
+  "author": "paradox",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/paradox010/lz/issues"
+  },
+  "homepage": "https://github.com/paradox010/lz#readme",
+  "dependencies": {
+    "@lzdata/utils": "1.0.0",
+  },
+  "bin":{
+    "create-umi2-app":"bin/create-umi2-app.js"
+  }
+}
