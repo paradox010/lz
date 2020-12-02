@@ -1,3 +1,5 @@
+import React, { Component } from 'react';
+
 import { Form, Icon, Input, Button, Row, Col, Divider, message } from 'antd';
 import { connect } from 'dva';
 import router from 'umi/router';
@@ -6,26 +8,17 @@ import styles from './setting.less';
 
 import { changePassword } from './service';
 
-function getFKey(obj) {
-  for (var key in obj) return obj[key];
-}
-
 const formItemLayout = {
   labelCol: { span: 9 },
   wrapperCol: { span: 6 },
 };
 
 @connect()
-class Password extends React.Component {
-  state = {
-    hasError: false,
-    loading: false,
-  };
-
+class Password extends Component {
   onConfirm = () => {
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const { passwordOld, passwordNew, passwordNew2 } = this.props.form.getFieldsValue();
+        const { passwordOld, passwordNew, passwordNew2 } = values;
         if (passwordNew !== passwordNew2) {
           message.info('新密码和确认密码不一致', 1);
           return;
@@ -36,9 +29,6 @@ class Password extends React.Component {
   };
 
   changePassword = async params => {
-    this.setState({
-      loading: true,
-    });
     const result = await changePassword(params);
     if (result) {
       message.success('修改成功，请重新登录', 1);
@@ -46,9 +36,6 @@ class Password extends React.Component {
         type: 'login/logout',
       });
     }
-    this.setState({
-      loading: false,
-    });
   };
 
   goBack = () => {

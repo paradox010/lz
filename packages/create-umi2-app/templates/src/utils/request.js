@@ -37,12 +37,12 @@ const errorHandler = error => {
       description: errorText,
     });
   } else if (!response) {
-    if(error.name==='customError'){
+    if (error.name === 'customError') {
       notification.error({
         description: error.message,
         message: '请求错误',
       });
-    }else{
+    } else {
       notification.error({
         description: '您的网络发生异常，无法连接服务器',
         message: '网络异常',
@@ -79,18 +79,17 @@ request.interceptors.request.use((url, options) => {
   };
 });
 
-request.interceptors.response.use(async (response, options) => {
+request.interceptors.response.use(async response => {
   const data = await response.clone().json();
   const { header, body } = data;
   if (header.code === '200' || header.code === 200) {
     return body || {};
-  } else {
-    const { message } = header;
-    const error = new Error();
-    error.name = 'customError';
-    error.message = message;
-    throw error;
   }
+  const { message } = header;
+  const error = new Error();
+  error.name = 'customError';
+  error.message = message;
+  throw error;
 });
 
 export default request;

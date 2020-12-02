@@ -1,4 +1,4 @@
-import { queryCurrent, query as queryUsers, accountLogin } from '@/services/user';
+import { queryCurrent, accountLogin } from '@/services/user';
 import { setAuthority } from '@/utils/authority';
 import { routerRedux } from 'dva/router';
 
@@ -23,7 +23,9 @@ const UserModel = {
         const { name } = response;
         if (name === 'customError') {
           // error
-          errorCallBack && errorCallBack(response.msg);
+          if (errorCallBack) {
+            errorCallBack(response.msg);
+          }
         } else {
           yield put({
             type: 'changeLoginStatus',

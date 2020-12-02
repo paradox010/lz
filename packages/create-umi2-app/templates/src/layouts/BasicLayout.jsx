@@ -3,11 +3,10 @@
  * You can view component api by:
  * https://github.com/ant-design/ant-design-pro-layout
  */
-import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
+import ProLayout from '@ant-design/pro-layout';
 import React, { useEffect } from 'react';
 import Link from 'umi/link';
 import { connect } from 'dva';
-import { Icon } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import RightContent from '@/components/GlobalHeader/RightContent';
 import logo from '../assets/logo.png';
@@ -60,7 +59,7 @@ const BasicLayout = props => {
         }
         return <Link to={menuItemProps.path}>{defaultDom}</Link>;
       }}
-      footerRender={()=>{}}
+      footerRender={() => {}}
       menuDataRender={menuDataRender}
       formatMessage={formatMessage}
       rightContentRender={rightProps => <RightContent {...rightProps} />}

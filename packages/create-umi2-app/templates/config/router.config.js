@@ -1,4 +1,3 @@
-
 export default [
   {
     path: '/user',
@@ -16,7 +15,7 @@ export default [
         redirect: '/welcome',
       },
       {
-        path:'/welcome',
+        path: '/welcome',
         name: 'welcome',
         component: './Welcome',
       },

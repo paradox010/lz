@@ -1,4 +1,4 @@
-import { Avatar, Icon, Menu, Spin } from 'antd';
+import { Icon, Menu } from 'antd';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import React from 'react';
 import { connect } from 'dva';
@@ -18,14 +18,11 @@ class AvatarDropdown extends React.Component {
       }
       return;
     }
-    router.push(`/account`);
+    router.push('/account');
   };
 
   render() {
-    const {
-      permission={},
-      menu,
-    } = this.props;
+    const { permission = {}, menu } = this.props;
     const { name } = permission;
     const menuHeaderDropdown = (
       <Menu className={styles.menu} selectedKeys={[]} onClick={this.onMenuClick}>

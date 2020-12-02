@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Form, Icon, Input, Button, Checkbox, Alert, Carousel } from 'antd';
-import router from 'umi/router';
-import styles from './Login.less';
+import { Form, Icon, Input, Button, Alert, Carousel } from 'antd';
+import styles from './login.less';
 
 const calarray = [
   { title: '产业地图', subTitle: ['全球产业链精准合作招商平台'] },
@@ -13,7 +12,7 @@ const calarray = [
   { title: '智慧招商', subTitle: ['大数据招商解决方案'] },
 ];
 @connect(({ loading }) => ({
-  loading: false,
+  loading,
 }))
 class LoginPageForm extends Component {
   state = {
@@ -31,11 +30,13 @@ class LoginPageForm extends Component {
       }
     });
   };
+
   errorCallBack = error => {
     this.setState({
       error,
     });
   };
+
   renderMessage = content => (
     <Alert style={{ marginBottom: 24 }} message={content} type="error" showIcon />
   );
@@ -49,16 +50,19 @@ class LoginPageForm extends Component {
         <div className={styles.content}>
           <div className={styles.left}>
             <Carousel autoplay>
-              {calarray.map((v, idx) => (
-                <div className={`${styles.back} ${styles['cal' + idx]}`} key={idx}>
-                  <div className={styles.calTitle}>{v.title}</div>
-                  {v.subTitle.map(m => (
-                    <div className={styles.calSubTitle} key={m}>
-                      {m}
-                    </div>
-                  ))}
-                </div>
-              ))}
+              {calarray.map((v, idx) => {
+                const clas = `cal${idx.toString()}`;
+                return (
+                  <div className={`${styles.back} ${styles[clas]}`} key={idx.toString()}>
+                    <div className={styles.calTitle}>{v.title}</div>
+                    {v.subTitle.map(m => (
+                      <div className={styles.calSubTitle} key={m}>
+                        {m}
+                      </div>
+                    ))}
+                  </div>
+                );
+              })}
             </Carousel>
           </div>
           <div className={styles.right}>
@@ -115,51 +119,3 @@ class LoginPageForm extends Component {
 const LoginPage = Form.create({ name: 'normal_login' })(LoginPageForm);
 
 export default LoginPage;
-
-/*
-<div className={styles.content}>
-          <div className={styles.main}>
-            <Form onSubmit={this.handleSubmit} className="login-form">
-              <Form.Item>
-                <h3>登录</h3>
-              </Form.Item>
-              {error ? <Form.Item>{this.renderMessage(error)}</Form.Item> : null}
-              <Form.Item>
-                {getFieldDecorator('mobile', {
-                  rules: [{ required: true, message: '请输入用户名!' }],
-                })(
-                  <Input
-                    prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    placeholder="请输入用户名"
-                  />,
-                )}
-              </Form.Item>
-              <Form.Item>
-                {getFieldDecorator('password', {
-                  rules: [{ required: true, message: '请输入密码!' }],
-                })(
-                  <Input
-                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    type="password"
-                    placeholder="请输入密码"
-                  />,
-                )}
-              </Form.Item>
-              <Form.Item>
-                {getFieldDecorator('remember', {
-                  valuePropName: 'checked',
-                  initialValue: true,
-                })(<Checkbox>记住密码</Checkbox>)}
-                <Button
-                  loading={loading}
-                  type="primary"
-                  htmlType="submit"
-                  className="login-form-button"
-                >
-                  登录
-                </Button>
-              </Form.Item>
-            </Form>
-          </div>
-        </div>
-        */

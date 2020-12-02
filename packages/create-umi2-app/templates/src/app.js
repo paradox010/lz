@@ -1,10 +1,10 @@
 let authRoutes = null;
+const router = require('umi/router');
+
 function filterRoute(menuList, routes) {
-  for (let i = 0; i < routes.length; i++) {
-    const { path, redirect } = routes[i];
-    if (!path) {
-    } else if (path === '/user') {
-    } else if (path === '/') {
+  for (let i = 0; i < routes.length; i += 1) {
+    const { path } = routes[i];
+    if (path === '/') {
       if (routes[i].routes) {
         filterRoute(menuList, routes[i].routes);
       }
@@ -13,30 +13,44 @@ function filterRoute(menuList, routes) {
       if (routes[i].routes) {
         filterRoute(menuList, routes[i].routes);
       }
-    } else {
+    } else if (path && path !== '/user') {
       // delete
       routes.splice(i, 1);
-      i--;
+      i -= 1;
     }
   }
 }
+
 export function patchRoutes(routes) {
-  // if (authRoutes) {
-  //   const { role } = authRoutes;
-  //   if (role === 1) {
-  //     const menuList = ['/project', '/manager', '/account'];
-  //     filterRoute(menuList, routes);
-  //   } else if (role === 2) {
-  //     const menuList = ['/projectSub', '/managerSub', '/account'];
-  //     filterRoute(menuList, routes);
-  //   } else {
-  //     const menuList = ['/projectSub', '/account'];
-  //     filterRoute(menuList, routes);
-  //   }
-  //   const master = routes.find(v=>v.path==='/');
-  //   master.routes[0].redirect = master.routes[1].path;
-  // }
+  if (process.env.AUTH && authRoutes) {
+    const { role } = authRoutes;
+    if (role === 1) {
+      const menuList = ['/project', '/manager', '/account'];
+      filterRoute(menuList, routes);
+    } else {
+      const menuList = ['/projectSub', '/account'];
+      filterRoute(menuList, routes);
+    }
+    const master = routes.find(v => v.path === '/');
+    master.routes[0].redirect = master.routes[1].path;
+  }
 }
+
+const permissionModel = {
+  namespace: 'permission',
+  state: {},
+  reducers: {
+    save(state, { payload }) {
+      return { ...state, ...payload };
+    },
+  },
+};
+
+const backToLogin = oldRender => {
+  window.g_app.model({ ...permissionModel, state: authRoutes });
+  router.push('/user/login');
+  oldRender();
+};
 
 export function render(oldRender) {
   let url = '/api/project/assignPermission';
@@ -74,36 +88,18 @@ export function render(oldRender) {
           backToLogin(oldRender);
         }
       })
-      .catch(e => {
+      .catch(() => {
         backToLogin(oldRender);
       });
   } else {
     backToLogin(oldRender);
   }
 }
-const backToLogin = oldRender => {
-  window.g_app.model({ ...permissionModel, state: authRoutes });
-
-  const router = require('umi/router');
-  router.push('/user/login');
-  oldRender();
-};
-
-const permissionModel = {
-  namespace: 'permission',
-  state: {},
-  reducers: {
-    save(state, { payload }) {
-      return { ...state, ...payload };
-    },
-  },
-};
 
 export const dva = {
   config: {
     onError(err) {
       err.preventDefault();
-      console.error(err.message);
     },
   },
 };

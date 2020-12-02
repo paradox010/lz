@@ -21,6 +21,6 @@ export function setAuthority(authority) {
 
 export function goSubUrl(item, menuPermissionList) {
   if (menuPermissionList.includes(item.route) && item.url) {
-    window.open(item.url + '?token=' + getAuthority());
+    window.open(`${item.url}?token=getAuthority()`);
   }
 }

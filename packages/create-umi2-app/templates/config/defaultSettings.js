@@ -1,7 +1,6 @@
 export default {
   navTheme: 'dark',
-  primaryColor: '#365499',
-  layout: 'topmenu',//sidemenu
+  layout: 'topmenu', //sidemenu
   contentWidth: 'Fluid',
   fixedHeader: true,
   autoHideHeader: false,
@@ -11,5 +10,5 @@ export default {
     locale: true,
   },
   title: 'prjname',
-  iconfontUrl: '',//图标库 在header上引用时需要加上icon-前缀
+  iconfontUrl: '', //图标库 在header上引用时需要加上icon-前缀
 };

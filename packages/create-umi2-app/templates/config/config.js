@@ -1,9 +1,11 @@
+import slash from 'slash2';
 import defaultSettings from './defaultSettings'; // https://umijs.org/config/
 
-import slash from 'slash2';
 import pageRoutes from './router.config';
 import webpackPlugin from './plugin.config';
-const { primaryColor, title } = defaultSettings; // preview.pro.ant.design only do not use in your production ;
+
+const { title } = defaultSettings;
+// preview.pro.ant.design only do not use in your production ;
 
 const plugins = [
   [

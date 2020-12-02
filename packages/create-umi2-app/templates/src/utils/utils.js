@@ -24,14 +24,14 @@ export const isAntDesignProOrDev = () => {
 };
 export const getPageQuery = () => parse(window.location.href.split('?')[1]);
 
-let key = CryptoJS.enc.Utf8.parse('liangzhikey@1021');
-let iv = CryptoJS.enc.Utf8.parse('liangzhikey@1021');
+const key = CryptoJS.enc.Utf8.parse('liangzhikey@1021');
+const iv = CryptoJS.enc.Utf8.parse('liangzhikey@1021');
 // 缓存用户登陆信息
 export function encrypt(data = '') {
   return CryptoJS.AES.encrypt(data, key, {
     mode: CryptoJS.mode.CBC,
     padding: CryptoJS.pad.Pkcs7,
     iv,
-  }).toString(); //AES加密
+  }).toString(); // AES加密
   // let result = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(newData));
 }

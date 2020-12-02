@@ -1,7 +1,8 @@
-import { Button, message, notification } from 'antd';
 import React from 'react';
+import { Button, message, notification } from 'antd';
 import { formatMessage } from 'umi-plugin-react/locale';
 import defaultSettings from '../config/defaultSettings';
+
 const { pwa } = defaultSettings; // if pwa is true
 
 if (pwa) {
@@ -36,15 +37,8 @@ if (pwa) {
             resolve(msgEvent.data);
           }
         };
-
-        worker.postMessage(
-          {
-            type: 'skip-waiting',
-          },
-          [channel.port2],
-        );
-      }); // Refresh current page to use the updated HTML and other assets after SW has skiped waiting
-
+        worker.postMessage({ type: 'skip-waiting' }, [channel.port2]);
+      });
       window.location.reload(true);
       return true;
     };
