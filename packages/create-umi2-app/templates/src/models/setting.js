@@ -1,4 +1,3 @@
-import { message } from 'antd';
 import defaultSettings from '../../config/defaultSettings';
 
 const updateColorWeak = colorWeak => {
@@ -22,7 +21,7 @@ const SettingModel = {
           setting[key] = value === '1' ? true : value;
         }
       });
-      const { primaryColor, colorWeak } = setting;
+      const { colorWeak } = setting;
 
       updateColorWeak(!!colorWeak);
       return { ...state, ...setting };
